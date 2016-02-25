@@ -1,0 +1,1 @@
+g++ main.cpp piece.cpp plateau.cpp -o appli.exe -std=c++11
