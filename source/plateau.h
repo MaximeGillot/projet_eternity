@@ -4,9 +4,11 @@
 class plateau
 {
 private:
-	std::vector<piece> plateau;
+	std::vector<piece> vPlateau;
+	int iCol;
+	int iRow;
+	bool init(const char* path) ;
 
 public:
-	plateau();
-	bool init() ;
+	plateau(const char* path);
 };
