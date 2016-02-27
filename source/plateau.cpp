@@ -60,12 +60,12 @@ bool plateau::init(const char* path)
 							break;
 							
 							case 2 :
-							p.set_Est(stoi(token));
+							p.set_Nord(stoi(token));
 							break;
 							
 							case 3 :
-							p.set_Sud(stoi(token));
-							vPlateau.push_back(p);
+							p.set_Est(stoi(token));
+							EnsemblePiece.push_back(p);
 							break;
 						}
 
@@ -86,5 +86,13 @@ bool plateau::init(const char* path)
 		cout << " Fichier non trouvé " << endl ;
 		exit (EXIT_FAILURE);
 		return false ;
+	}
+}
+
+void plateau::afficherEnsemblePiece()
+{
+	for (int i = 0; i < EnsemblePiece.size(); ++i)
+	{
+		cout << " piece numéro " << i << " : " << EnsemblePiece.at(i).get_Sud() << " " << EnsemblePiece.at(i).get_Ouest() << " " << EnsemblePiece.at(i).get_Nord() << " " << EnsemblePiece.at(i).get_Est() << endl ;
 	}
 }
