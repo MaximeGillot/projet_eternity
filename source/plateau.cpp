@@ -66,6 +66,7 @@ bool plateau::init(const char* path)
 							case 3 :
 							p.set_Est(stoi(token));
 							p.set_Rotation(0);
+							p.set_Id(i);
 							EnsemblePiece.push_back(p);
 							break;
 						}
@@ -110,15 +111,15 @@ void plateau::afficherPuzzle() // revoir affichage
 				switch(k)
 				{
 					case 0 :
-					cout << "  "  << puzzle[i][j].get_Nord() ;
+					cout << "    "  << puzzle[i][j].get_Nord() ;
 					break ;
 
 					case 1 :
-					cout << puzzle[i][j].get_Ouest() << "  " << puzzle[i][j].get_Est() ; ;
+					cout << "  " << puzzle[i][j].get_Ouest() << "|" << puzzle[i][j].get_Est() ; 
 					break ;
 
 					case 2 :
-					cout << puzzle[i][j].get_Sud() << "    " ;
+					cout << "    "  << puzzle[i][j].get_Sud() ;
 					break ;
 					
 				}
@@ -187,13 +188,5 @@ int plateau::nbErreur() //a tester
 
 void plateau::backtracking() // a faire
 {
-	for (int i = 0; i < 3; ++i)
-	{
-		std::vector<piece> v;
-		for (int j = 0; j < 3 ; ++j)
-		{
-			v.push_back(EnsemblePiece[j]);
-		}
-		puzzle.push_back(v);
-	}
+	
 }

@@ -8,6 +8,11 @@ iNord(nord) , iSud(sud) , iOuest(ouest) , iEst(est)
 	iRotation = 0;
 }
 
+int piece::get_Id()
+{
+	return iId ;
+}
+
 int piece::get_Nord()
 {
 	switch(iRotation)
@@ -124,4 +129,33 @@ void piece::set_Est(int Est)
 void piece::set_Rotation(int Rotation)
 {
 	iRotation = Rotation ;
+}
+
+void piece::set_Id(int id)
+{
+	iId = id ;
+}
+
+void piece::rotate()
+{
+	if( iRotation == 3)
+	{
+		iRotation = 0 ;
+	}
+	else
+	{
+		iRotation++;
+	}
+}
+
+void piece::unRotate()
+{
+	if(iRotation == 0)
+	{
+		iRotation = 3 ;
+	}
+	else
+	{
+		iRotation--;
+	}
 }
