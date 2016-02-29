@@ -18,10 +18,12 @@ public:
 	int get_Sud();
 	int get_Ouest();
 	int get_Est();
+	int get_Rotation();
 	void set_Nord(int Nord);
 	void set_Sud(int Sud);
 	void set_Ouest(int Ouest);	
 	void set_Est(int Est);
+	void set_Rotation(int Rotation);
 };
 
 

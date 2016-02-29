@@ -7,6 +7,8 @@ int main(int argc, char const *argv[])
 
 	const char * path = argv[1] ;
 	plateau bord = plateau(path);
-	bord.afficherEnsemblePiece() ;
+	//bord.afficherEnsemblePiece() ;
+	bord.backtracking();
+	bord.afficherPuzzle();
 	return 0;
 }

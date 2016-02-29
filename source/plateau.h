@@ -8,6 +8,7 @@ private:
 	int iCol;
 	int iRow;
 	bool init(const char* path) ;
+	std::vector<std::vector<piece> > puzzle;
 
 public:
 	/*
@@ -20,4 +21,10 @@ public:
 		afficher l'ensenble des pieces disponibles , EnsemblePiece
 	*/
 	void afficherEnsemblePiece();
+
+	void afficherPuzzle() ;
+
+	void backtracking() ;
+
+	int nbErreur();
 };
