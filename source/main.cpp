@@ -1,14 +1,13 @@
 #include <iostream>
-#include "plateau.h"
+#include "instance.h"
 
 int main(int argc, char const *argv[])
 {
 	std::cout << " Programme de M.G " << std::endl;
 
 	const char * path = argv[1] ;
-	plateau bord = plateau(path);
-	//bord.afficherEnsemblePiece() ;
-	bord.backtracking();
-	bord.afficherPuzzle();
+	instance in = instance(path);
+	in.afficherEnsemblePiece();
+	in.generatAndTest() ;
 	return 0;
 }

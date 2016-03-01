@@ -8,104 +8,24 @@ using namespace std;
 
 
 
-plateau::plateau(const char* path)
+plateau::plateau()
 {
-	init(path);
+	initVide();
 }
 
-bool plateau::init(const char* path)
+plateau::plateau(int row , int col) :
+iRow(row) , iCol(col) 
 {
-
-	ifstream fichier( path , ios::in); 
-	if(fichier) 
-	{   
-		string ligne;  	
-		int iNbLigne = 0;
-
-		while(getline(fichier, ligne)) 
-		{
-				string currentSentence = ligne ;
-				currentSentence += " ";
-				std::string delimiter = " ";					
-				size_t pos = 0;
-				std::string token;
-				int i = 0 ;
-				piece p = piece();
-
-				while ((pos = currentSentence.find(delimiter)) != std::string::npos) 
-				{
-					token = currentSentence.substr(0, pos);
-
-					if( iNbLigne == 0 ) // si on trouve un sommet
-					{
-						if (i == 0)
-						{
-							iCol = stoi(token);
-						}
-						else
-						{
-							iRow = stoi(token);
-						}
-					}
-					else
-					{
-						switch(i)
-						{
-							case 0 :
-							p.set_Sud(stoi(token));
-							break;
-
-							case 1 :
-							p.set_Ouest(stoi(token));
-							break;
-							
-							case 2 :
-							p.set_Nord(stoi(token));
-							break;
-							
-							case 3 :
-							p.set_Est(stoi(token));
-							p.set_Rotation(0);
-							p.set_Id(i);
-							EnsemblePiece.push_back(p);
-							break;
-						}
-
-					}
-					
-
-					i++;
-					currentSentence.erase(0, pos + delimiter.length());
-				}
-
-			iNbLigne++;
-		}
-		cout << " row" << iRow << " col " << iCol << endl ;
-		return true ;
-	}
-	else
-	{
-		cout << " Fichier non trouvé " << endl ;
-		exit (EXIT_FAILURE);
-		return false ;
-	}
-}
-
-void plateau::afficherEnsemblePiece()
-{
-	for (int i = 0; i < EnsemblePiece.size(); ++i)
-	{
-		cout << " piece numéro " << i << " : " << EnsemblePiece.at(i).get_Sud() << " " << EnsemblePiece.at(i).get_Ouest() << " " << EnsemblePiece.at(i).get_Nord() << " " << EnsemblePiece.at(i).get_Est() << endl ;
-	}
+	initVide();
 }
 
 void plateau::afficherPuzzle() // revoir affichage
 {
-	for (int i = 0; i < puzzle.size(); ++i)
+	for (int i = 0; i < iRow; ++i)
 	{
 		for (int k = 0; k < 3 ; ++k)
 		{
-			for (int j = 0; j < puzzle[i].size() ; ++j)
+			for (int j = 0; j < iCol ; ++j)
 			{
 		
 				switch(k)
@@ -132,13 +52,13 @@ void plateau::afficherPuzzle() // revoir affichage
 int plateau::nbErreur() //a tester
 {
 	int nbErreur = 0 ;
-	for (int i = 0; i < puzzle.size() ; ++i)
+	for (int i = 0; i < iRow; ++i)
 	{
-		for (int j = 0; j < puzzle[i].size() ; ++j)
+		for (int j = 0; j < iCol ; ++j)
 		{
 			if( i == 0 )
 			{
-				if( puzzle[i][j].get_Ouest() != 0 )
+				if( puzzle[i][j].get_Nord() != 0 )
 				{
 					nbErreur++;
 				}
@@ -146,34 +66,34 @@ int plateau::nbErreur() //a tester
 
 			if( j == 0 )
 			{
-				if (puzzle[i][j].get_Nord() != 0 )
+				if (puzzle[i][j].get_Ouest() != 0 )
 				{
 					nbErreur++;
 				}
 			}
 
-			if ( j == puzzle[i].size()-1)
+			if ( j == iCol-1)
 			{
-				if (puzzle[i][j].get_Sud() != 0 )
+				if (puzzle[i][j].get_Est() != 0 )
 				{
 					nbErreur++;
 				}
 			}
 
-			if (i == puzzle[i].size()-1)
+			if (i == iRow-1)
 			{
-				if(puzzle[i][j].get_Est() != 0)
+				if(puzzle[i][j].get_Sud() != 0)
 				{
 					nbErreur++;
 				}
 			}
 
-			if (i != puzzle.size()-1 && puzzle[i][j].get_Est() != puzzle[i+1][j].get_Ouest())
+			if (i != iRow-1 && puzzle[i][j].get_Sud() != puzzle[i+1][j].get_Nord())
 			{
 				nbErreur++;
 			}
 
-			if (j != puzzle[i].size() && puzzle[i][j].get_Sud() != puzzle[i][j+1].get_Nord())
+			if (j != iCol-1 && puzzle[i][j].get_Ouest() != puzzle[i][j+1].get_Est())
 			{
 				nbErreur++;
 			}
@@ -184,9 +104,60 @@ int plateau::nbErreur() //a tester
 	return nbErreur ;
 }
 
-
-
-void plateau::backtracking() // a faire
+void plateau::initVide()
 {
-	
+	for (int i = 0; i < iRow; ++i)
+	{
+		std::vector<piece> v;
+		for (int j = 0; j < iCol; ++j)
+		{
+			piece p = piece();
+			v.push_back(p);
+		}
+		puzzle.push_back(v);
+	}
+}
+
+void plateau::randomSwapHillClimbing() 
+{
+	//cout << " Swap aléatoire " << endl ;
+	srand (time(NULL));
+	int randomRow1 = rand() % iRow;
+	int randomCol1 = rand() % iCol;
+	int randomRow2 = rand() % iRow;
+	int randomCol2 = rand() % iCol;
+	int oldErreur = nbErreur();
+	piece tmp = puzzle[randomRow2][randomCol2] ;
+	puzzle[randomRow2][randomCol2] = puzzle[randomRow1][randomCol1] ;
+	puzzle[randomRow1][randomCol1] = tmp ;
+
+	if(nbErreur() > oldErreur)
+	{
+		puzzle[randomRow1][randomCol1] = puzzle[randomRow2][randomCol2];
+		puzzle[randomRow2][randomCol2] = tmp ;
+	}
+}
+
+void plateau::randomRotateHillClimbing()
+{
+	//cout << " rotate aléatoire " << endl ;
+	srand (time(NULL));
+	int randomRow1 = rand() % iRow;
+	int randomCol1 = rand() % iCol;
+	int rotateNumber = rand() % 3 + 1 ;
+	int oldErreur = nbErreur();
+
+	//cout << "Rotation alléatoire de la case " << randomRow1 << "," << randomCol1 << " de force " << rotateNumber ;
+	for (int i = 0; i < rotateNumber ; ++i)
+	{
+		puzzle[randomRow1][randomCol1].rotate();
+	}
+
+	if(nbErreur() > oldErreur)
+	{
+		for (int i = 0; i < rotateNumber ; ++i)
+		{
+			puzzle[randomRow1][randomCol1].unRotate();
+		}
+	}
 }

@@ -1,6 +1,14 @@
 #include "piece.h"
 
-piece::piece() {}
+piece::piece() 
+{
+	iNord = -1;
+	iSud = -1 ;
+	iOuest = -1;
+	iEst = -1;
+	iRotation = 0 ;
+	iId = -1;
+}
 
 piece::piece(int nord , int sud , int ouest , int est ) :
 iNord(nord) , iSud(sud) , iOuest(ouest) , iEst(est) 

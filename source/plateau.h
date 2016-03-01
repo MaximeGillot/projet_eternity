@@ -4,27 +4,23 @@
 class plateau
 {
 private:
-	std::vector<piece> EnsemblePiece;
-	int iCol;
 	int iRow;
-	bool init(const char* path) ;
+	int iCol;
+public:
+
 	std::vector<std::vector<piece> > puzzle;
 
-public:
-	/*
-		initialise le plateau
-		@param path chemin vers le fichier texte contenant l'instance du puzzle
-	*/
-	plateau(const char* path);
+	plateau();
 
-	/*
-		afficher l'ensenble des pieces disponibles , EnsemblePiece
-	*/
-	void afficherEnsemblePiece();
+	plateau( int row , int col );
 
 	void afficherPuzzle() ;
 
-	void backtracking() ;
-
 	int nbErreur();
+
+	void initVide();
+
+	void randomRotateHillClimbing() ;
+
+	void randomSwapHillClimbing();
 };
