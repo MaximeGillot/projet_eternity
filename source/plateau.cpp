@@ -88,12 +88,12 @@ int plateau::nbErreur() //a tester
 				}
 			}
 
-			if (i != iRow-1 && puzzle[i][j].get_Sud() != puzzle[i+1][j].get_Nord())
+			if ((i != iRow-1 && puzzle[i][j].get_Sud() != puzzle[i+1][j].get_Nord() ) || ( puzzle[i][j].get_Sud() == 0 || puzzle[i][j].get_Nord() == 0) ) // revoir
 			{
 				nbErreur++;
 			}
 
-			if (j != iCol-1 && puzzle[i][j].get_Ouest() != puzzle[i][j+1].get_Est())
+			if ((j != iCol-1 && puzzle[i][j].get_Ouest() != puzzle[i][j+1].get_Est() )|| (puzzle[i][j].get_Ouest() == 0 || puzzle[i][j+1].get_Est() == 0 ) )
 			{
 				nbErreur++;
 			}
@@ -118,7 +118,10 @@ void plateau::initVide()
 	}
 }
 
-void plateau::randomSwapHillClimbing() 
+/*
+si force = true alors l'action est executé et il n'y a pas de retour arriere
+*/
+bool plateau::randomSwapHillClimbing(bool force) //revoir pour le rendre intéligent
 {
 	//cout << " Swap aléatoire " << endl ;
 	srand (time(NULL));
@@ -131,14 +134,17 @@ void plateau::randomSwapHillClimbing()
 	puzzle[randomRow2][randomCol2] = puzzle[randomRow1][randomCol1] ;
 	puzzle[randomRow1][randomCol1] = tmp ;
 
-	if(nbErreur() > oldErreur)
+	if(nbErreur() > oldErreur && !force)
 	{
 		puzzle[randomRow1][randomCol1] = puzzle[randomRow2][randomCol2];
 		puzzle[randomRow2][randomCol2] = tmp ;
+		return false ;
 	}
+
+	return true ;
 }
 
-void plateau::randomRotateHillClimbing()
+bool plateau::randomRotateHillClimbing(bool force)
 {
 	//cout << " rotate aléatoire " << endl ;
 	srand (time(NULL));
@@ -153,11 +159,14 @@ void plateau::randomRotateHillClimbing()
 		puzzle[randomRow1][randomCol1].rotate();
 	}
 
-	if(nbErreur() > oldErreur)
+	if(nbErreur() > oldErreur && ! force)
 	{
 		for (int i = 0; i < rotateNumber ; ++i)
 		{
 			puzzle[randomRow1][randomCol1].unRotate();
 		}
+		return false;
 	}
+
+	return true ;
 }

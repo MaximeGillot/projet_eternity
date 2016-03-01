@@ -20,7 +20,7 @@ public:
 
 	void initVide();
 
-	void randomRotateHillClimbing() ;
+	bool randomRotateHillClimbing(bool force) ;
 
-	void randomSwapHillClimbing();
+	bool randomSwapHillClimbing(bool force);
 };

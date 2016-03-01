@@ -8,6 +8,6 @@ int main(int argc, char const *argv[])
 	const char * path = argv[1] ;
 	instance in = instance(path);
 	in.afficherEnsemblePiece();
-	in.generatAndTest() ;
+	in.hillClimbing() ;
 	return 0;
 }

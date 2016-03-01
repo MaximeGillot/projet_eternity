@@ -15,7 +15,7 @@ public:
 	instance(const char* path);
 	void afficherEnsemblePiece();
 	bool init(const char* path);
-	void generatAndTest() ;
+	void hillClimbing() ;
 	
 private:
 

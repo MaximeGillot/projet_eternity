@@ -105,15 +105,53 @@ void instance::afficherEnsemblePiece()
 	cout << endl ;
 }
 
-void instance::generatAndTest() // changer titre fonction en hill climbing
+void instance::hillClimbing()
 {
 	bool PasTrouver = true ;
 
 	plateau p = plateau(iRow,iCol);
 	int i = 0;
 	int j = 0;
+	int iterationMax = 0 ;
+	int action = rand() % 2 ;
+	int oldErreur = p.nbErreur();
 
-	for (int k = 0; k < EnsemblePiece.size() ; ++k)
+	
+
+	p.puzzle[0][0] = EnsemblePiece[0] ;
+	p.puzzle[0][iCol-1] = EnsemblePiece[1] ;
+	p.puzzle[iRow-1][0] = EnsemblePiece[2];
+	p.puzzle[iRow-1][iCol-1] = EnsemblePiece[3];
+
+	int k = 4 ;
+	for (int i = 0; i < iRow; ++i)
+	{
+		for (int j = 0; j < iCol; ++j)
+		{
+			if( (i == 0 || i == iRow-1 || j == 0 || j == iCol-1 ) && p.puzzle[i][j].get_Id() == -1 )
+			{
+				p.puzzle[i][j] = EnsemblePiece[k];
+				k++;
+			}
+		}
+	}
+
+	for (int i = 0; i < iRow; ++i)
+	{
+		for (int j = 0; j < iCol; ++j)
+		{
+			if(  p.puzzle[i][j].get_Id() == -1 )
+			{
+				p.puzzle[i][j] = EnsemblePiece[k];
+				k++;
+			}
+		}
+	}
+
+
+	//iCol*iRow -4
+
+	/*for (int k = 0; k < EnsemblePiece.size() ; ++k)
 	{
 		p.puzzle[i][j] = EnsemblePiece[k];
 		j++;
@@ -122,29 +160,38 @@ void instance::generatAndTest() // changer titre fonction en hill climbing
 			i++;
 			j=0;
 		}
-	}
+	}*/
 
-	
-	while(PasTrouver)
+	p.afficherPuzzle();
+
+	while(PasTrouver )
 	{
-
-		int action = rand() % 2 ;
-		int oldErreur = p.nbErreur();
+		action = rand() % 2 ;
+		oldErreur = p.nbErreur();
+		
+		iterationMax++;
 
 		if(action == 0)
 		{
-			p.randomSwapHillClimbing();
+			if(p.randomSwapHillClimbing(false))
+			{
+				iterationMax = 0;
+			}
 		}
 		else
 		{
-			p.randomRotateHillClimbing();
+			if(p.randomRotateHillClimbing(false))
+			{
+				iterationMax = 0 ;
+			}
 		}
 
 	
 
 		if(p.nbErreur() < oldErreur)
 		{
-			cout << " meilleur solution trouver : " << endl << endl ;
+			cout << " meilleur solution trouver avec : " << p.nbErreur() << " erreurs " << endl << endl ;
+
 			p.afficherPuzzle();
 		}
 
@@ -155,6 +202,37 @@ void instance::generatAndTest() // changer titre fonction en hill climbing
 			PasTrouver = false ;
 		}
 
+		if (iterationMax == 500000000)
+		{
+			cout << " tentative de forçage " << endl ;
+			iterationMax = 0;
+			for (int i = 0; i < 20; ++i)
+			{
+				action = rand() % 2 ;
+
+				if(action == 0)
+				{
+					if(p.randomSwapHillClimbing(true))
+					{
+						iterationMax = 0;
+					}
+				}
+				else
+				{
+					if(p.randomRotateHillClimbing(true))
+					{
+						iterationMax = 0 ;
+					}
+				}
+			}
+		}
+
 	}
 
 }
+
+/*
+	rajouter swap inteligent
+	erreur quand 0 et 0 sont a coter , seulement pas d'erreur quand il y a un bord 
+
+*/
