@@ -61,6 +61,8 @@ int plateau::nbErreur() //a tester
 				if( puzzle[i][j].get_Nord() != 0 )
 				{
 					nbErreur++;
+
+
 				}
 			}
 
@@ -69,6 +71,7 @@ int plateau::nbErreur() //a tester
 				if (puzzle[i][j].get_Ouest() != 0 )
 				{
 					nbErreur++;
+
 				}
 			}
 
@@ -77,6 +80,7 @@ int plateau::nbErreur() //a tester
 				if (puzzle[i][j].get_Est() != 0 )
 				{
 					nbErreur++;
+
 				}
 			}
 
@@ -85,18 +89,22 @@ int plateau::nbErreur() //a tester
 				if(puzzle[i][j].get_Sud() != 0)
 				{
 					nbErreur++;
+
 				}
 			}
 
-			if ((i != iRow-1 && puzzle[i][j].get_Sud() != puzzle[i+1][j].get_Nord() ) || ( puzzle[i][j].get_Sud() == 0 || puzzle[i][j].get_Nord() == 0) ) // revoir
+			if (i != iRow-1 &&  ( puzzle[i][j].get_Sud() != puzzle[i+1][j].get_Nord()  ) ) // vérification du nord et sur des pieces
+			{
+				nbErreur++;
+								
+			}
+
+			if ( j != iCol-1 && puzzle[i][j].get_Est() != puzzle[i][j+1].get_Ouest()  ) // vérification de l'ouest et l'est
 			{
 				nbErreur++;
 			}
 
-			if ((j != iCol-1 && puzzle[i][j].get_Ouest() != puzzle[i][j+1].get_Est() )|| (puzzle[i][j].get_Ouest() == 0 || puzzle[i][j+1].get_Est() == 0 ) )
-			{
-				nbErreur++;
-			}
+
 
 		}
 	}
@@ -134,7 +142,7 @@ bool plateau::randomSwapHillClimbing(bool force) //revoir pour le rendre intéli
 	puzzle[randomRow2][randomCol2] = puzzle[randomRow1][randomCol1] ;
 	puzzle[randomRow1][randomCol1] = tmp ;
 
-	if(nbErreur() > oldErreur && !force)
+	if(nbErreur() > oldErreur || force)
 	{
 		puzzle[randomRow1][randomCol1] = puzzle[randomRow2][randomCol2];
 		puzzle[randomRow2][randomCol2] = tmp ;
@@ -159,7 +167,7 @@ bool plateau::randomRotateHillClimbing(bool force)
 		puzzle[randomRow1][randomCol1].rotate();
 	}
 
-	if(nbErreur() > oldErreur && ! force)
+	if(nbErreur() > oldErreur || force)
 	{
 		for (int i = 0; i < rotateNumber ; ++i)
 		{

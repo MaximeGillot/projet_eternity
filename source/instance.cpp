@@ -148,20 +148,6 @@ void instance::hillClimbing()
 		}
 	}
 
-
-	//iCol*iRow -4
-
-	/*for (int k = 0; k < EnsemblePiece.size() ; ++k)
-	{
-		p.puzzle[i][j] = EnsemblePiece[k];
-		j++;
-		if (j == iCol)
-		{
-			i++;
-			j=0;
-		}
-	}*/
-
 	p.afficherPuzzle();
 
 	while(PasTrouver )
@@ -201,12 +187,13 @@ void instance::hillClimbing()
 			p.afficherPuzzle();
 			PasTrouver = false ;
 		}
-
-		if (iterationMax == 500000000)
+		
+		//cout << iterationMax << endl ;
+		if (iterationMax == 10000000)
 		{
 			cout << " tentative de forçage " << endl ;
 			iterationMax = 0;
-			for (int i = 0; i < 20; ++i)
+			for (int i = 0; i < 10; ++i)
 			{
 				action = rand() % 2 ;
 
