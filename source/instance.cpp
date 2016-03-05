@@ -186,6 +186,7 @@ void instance::hillClimbing()
 			cout << "Solution Final trouvé " << endl ;
 			p.afficherPuzzle();
 			PasTrouver = false ;
+			iterationMax = 0 ;
 		}
 		
 		//cout << iterationMax << endl ;
@@ -196,22 +197,20 @@ void instance::hillClimbing()
 			for (int i = 0; i < 10; ++i)
 			{
 				action = rand() % 2 ;
+				cout << action << endl ;
 
 				if(action == 0)
 				{
-					if(p.randomSwapHillClimbing(true))
-					{
-						iterationMax = 0;
-					}
+					p.randomSwapHillClimbing(true);
 				}
 				else
 				{
-					if(p.randomRotateHillClimbing(true))
-					{
-						iterationMax = 0 ;
-					}
+					p.randomRotateHillClimbing(true);
 				}
 			}
+			iterationMax = 0 ;
+			cout << " nb erreur : " << p.nbErreur() << " apres forcage : " << endl << endl ;
+			p.afficherPuzzle(); 
 		}
 
 	}

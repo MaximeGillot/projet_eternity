@@ -132,7 +132,6 @@ si force = true alors l'action est executé et il n'y a pas de retour arriere
 bool plateau::randomSwapHillClimbing(bool force) //revoir pour le rendre intéligent
 {
 	//cout << " Swap aléatoire " << endl ;
-	srand (time(NULL));
 	int randomRow1 = rand() % iRow;
 	int randomCol1 = rand() % iCol;
 	int randomRow2 = rand() % iRow;
@@ -142,11 +141,14 @@ bool plateau::randomSwapHillClimbing(bool force) //revoir pour le rendre intéli
 	puzzle[randomRow2][randomCol2] = puzzle[randomRow1][randomCol1] ;
 	puzzle[randomRow1][randomCol1] = tmp ;
 
-	if(nbErreur() > oldErreur || force)
-	{
-		puzzle[randomRow1][randomCol1] = puzzle[randomRow2][randomCol2];
-		puzzle[randomRow2][randomCol2] = tmp ;
-		return false ;
+	if(force == false)
+	{	
+		if(nbErreur() > oldErreur )
+		{
+			puzzle[randomRow1][randomCol1] = puzzle[randomRow2][randomCol2];
+			puzzle[randomRow2][randomCol2] = tmp ;
+			return false ;
+		}
 	}
 
 	return true ;
@@ -155,7 +157,6 @@ bool plateau::randomSwapHillClimbing(bool force) //revoir pour le rendre intéli
 bool plateau::randomRotateHillClimbing(bool force)
 {
 	//cout << " rotate aléatoire " << endl ;
-	srand (time(NULL));
 	int randomRow1 = rand() % iRow;
 	int randomCol1 = rand() % iCol;
 	int rotateNumber = rand() % 3 + 1 ;
@@ -167,13 +168,16 @@ bool plateau::randomRotateHillClimbing(bool force)
 		puzzle[randomRow1][randomCol1].rotate();
 	}
 
-	if(nbErreur() > oldErreur || force)
+	if(force == false )
 	{
-		for (int i = 0; i < rotateNumber ; ++i)
+		if(nbErreur() > oldErreur )
 		{
-			puzzle[randomRow1][randomCol1].unRotate();
-		}
+			for (int i = 0; i < rotateNumber ; ++i)
+			{
+				puzzle[randomRow1][randomCol1].unRotate();
+			}
 		return false;
+		}
 	}
 
 	return true ;
