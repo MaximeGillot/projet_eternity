@@ -9,5 +9,6 @@ int main(int argc, char const *argv[])
 	instance in = instance(path);
 	in.afficherEnsemblePiece();
 	in.hillClimbing() ;
+	in.plateau2file(path);
 	return 0;
 }

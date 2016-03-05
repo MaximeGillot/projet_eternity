@@ -2,3 +2,8 @@
 
 Project of combinatory optimization to solve eternity II problem
 
+https://github.com/mamax49/projet_eternity
+
+méthode utilisé : hill climbing stochastique ie : si l’action est améliorante ou équivalente la garder
+
+si les swap de piece ne sont pas intelligent = aucune solution
