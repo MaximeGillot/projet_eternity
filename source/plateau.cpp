@@ -129,13 +129,64 @@ void plateau::initVide()
 /*
 si force = true alors l'action est executé et il n'y a pas de retour arriere
 */
-bool plateau::randomSwapHillClimbing(bool force) //revoir pour le rendre intéligent
+bool plateau::randomSwapHillClimbing(bool force) //revoir pour le rendre intéligent revoir le swap intéligent
 {
-	//cout << " Swap aléatoire " << endl ;
 	int randomRow1 = rand() % iRow;
 	int randomCol1 = rand() % iCol;
-	int randomRow2 = rand() % iRow;
-	int randomCol2 = rand() % iCol;
+	int randomRow2 ;
+	int randomCol2 ;
+
+	if (puzzle[randomRow1][randomCol1].get_Id() < 4) // si la piece choisie au hasard est un coin
+	{
+		int aleatoire = rand() % 4 + 1 ;
+		if (aleatoire == 1)
+		{
+			randomRow2 = 0 ;
+			randomCol2 = 0 ;
+		}
+		else if(aleatoire == 2)
+		{
+			randomRow2 = 0;
+			randomCol2 = iCol-1 ;
+		}
+		else if(aleatoire == 3)
+		{
+			randomRow2 = iRow-1 ;
+			randomCol2 = 0;
+		}
+		else if(aleatoire == 4)
+		{
+			randomRow2 = iRow-1 ;
+			randomCol2 = iCol-1 ;			
+		}
+	}
+	else if ( randomRow1 == 0 || randomRow1 == iRow-1 || randomCol1 == 0 || randomCol1 == iCol-1 ) // si c'est un bord
+	{
+		randomRow2 = rand() % iRow;
+		if(randomRow2 == 0 || randomRow2 == iRow-1)
+		{
+			randomCol2 = rand() % (iCol-2) + 1 ;
+			//cout << iCol-2 << " randomCol2 : " << randomCol2 << endl ;
+		}
+		else
+		{
+			int aleatoire = rand() % 2 + 1 ;
+			if (aleatoire == 1)
+			{
+				randomCol2 = 0;
+			}
+			else
+			{
+				randomCol2 = iCol-1 ;
+			}
+		}
+	}
+	else	// si c'est une piece du millieux 
+	{
+
+		randomRow2 = rand() % ((iRow-1)-1) + 1 ;
+		randomCol2 = rand() % ((iCol-1)-1) + 1 ;
+	}
 	int oldErreur = nbErreur();
 	piece tmp = puzzle[randomRow2][randomCol2] ;
 	puzzle[randomRow2][randomCol2] = puzzle[randomRow1][randomCol1] ;

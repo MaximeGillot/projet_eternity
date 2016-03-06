@@ -38,4 +38,11 @@ Oui mais un seul mouvement ne sera pas suffisant, car il est probable que le jeu
 
 L'algorithme proposé devrait fonctionner plutôt bien pour des puzzles de moins de 100 pièces. Après, pour les puzzles plus grands, cela doit dépendre des instances mais il faut garder à l'esprit que des solutions sans erreur deviennent difficiles à atteindre.
 
-Cordialement,
+temps d'execution avec full aleatoire :
+temps execution : piece_2x2_.txt :0.004950seconde
+temps execution : piece_3x3_.txt :114.307388seconde
+5x5 : pas trouver
+
+temps d'execution avec coin inteligent :
+temps execution : piece_2x2_.txt :0.004950seconde
+temps execution : piece_3x3_.txt :114.307388seconde

@@ -1,0 +1,41 @@
+@author : Maxime Gillot 
+
+Project of combinatory optimization to solve eternity II problem
+
+https://github.com/mamax49/projet_eternity
+
+méthode utilisé : hill climbing stochastique ie : si l’action est améliorante ou équivalente la garder
+
+si les swap de piece ne sont pas intelligent = aucune solution
+
+
+
+    Bonjour,
+
+    je vous envoie ce mail car j'ai des questions à propos du projet et plus précisément de l'algorithme hill climbing.
+
+    voilà mon algorithme en pseudo code :
+
+    tant qu'il y a des erreurs dans le jeux
+            choisir une action au hasard : swap 2 piece au hasard ou rotate une piece au hasard
+            si l’action est améliorante la garder
+            sinon annuler
+    fin tant que
+
+    1) j'aurais voulu savoir si mon algorithme correspond bien au hill climbing ?
+
+Oui c'est exactement cela. Considérant que les actions améliorantes vont vite devenir rares, ne pas hésiter à considérer le hill-climbing stochastique avec "si l’action est améliorante ou équivalente la garder". Cela sera bien plus efficace (tester les 2 variantes pour bien se rendre compte).
+
+    2) mes swaps de pièces doivent-il être intelligent ? c'est à dire si par exemple je swap un coin alors l'autre pièce choisit devra forcement être un coin aussi ? ou je laisse le hasard faire des miracles ?
+    3) l'initialisation du jeux doit t'il être intelligent ou complétement aléatoire ? par intelligent j’entends de mettre les coins au bonne endroit dés le début, pareille pour les bordures .
+
+Les questions sont liées. Tout dépend de la modélisation et des actions envisagées (voisinage). Les deux sont possibles, mais il va de soit que de considérer comme espace de recherche les solutions où les coins sont aux coins, les bords aux bords et le reste au milieu, et ce dès le début, va réduire les possibilités et être plus efficace, en tout cas pour trouver une solution sans erreur. La contrepartie est de faire attention à ce que les swaps soient bien envisagés avec une distribution uniforme (par exemple ne pas envisager d'échanger des coins 1 fois sur 3 !). Autre intérêt, la rotation des coins et des bords est unique selon la position de la pièce. Tout ceci permet en fait de ne pas considérer la couleur 0 comme une couleur, puisqu'elle ne sera jamais appariée avec une autre.
+Mais de toute manière, le hasard fait des miracles ; c'est l'enseignement principal à tirer de cette introduction à la recherche locale et aux algorithmes évolutionnaires.
+
+    4 ) et enfin, il arrive un moment où le jeux est totalement bloqué et aucune action peut être améliorante, dans ce cas, je doit faire une action totalement aléatoire pour débloquer la situation ?
+
+Oui mais un seul mouvement ne sera pas suffisant, car il est probable que le jeu se rebloque le coup suivant. Il faut faire plusieurs actions totalement aléatoires, dont le nombre approximatif idéal peut être déterminé par quelques tests. Ce nombre dépend aussi de la taille du puzzle. Entre 5 et 20 semble être une fourchette convenable a priori.
+
+L'algorithme proposé devrait fonctionner plutôt bien pour des puzzles de moins de 100 pièces. Après, pour les puzzles plus grands, cela doit dépendre des instances mais il faut garder à l'esprit que des solutions sans erreur deviennent difficiles à atteindre.
+
+Cordialement,

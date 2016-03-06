@@ -1,2 +1,0 @@
-temps execution : piece_2x2_.txt :0.004950seconde
-temps execution : piece_3x3_.txt :114.307388seconde
