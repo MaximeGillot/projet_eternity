@@ -143,7 +143,7 @@ bool plateau::randomSwapHillClimbing(bool force) //revoir pour le rendre intéli
 
 	if(force == false)
 	{	
-		if(nbErreur() > oldErreur )
+		if(nbErreur() >= oldErreur )
 		{
 			puzzle[randomRow1][randomCol1] = puzzle[randomRow2][randomCol2];
 			puzzle[randomRow2][randomCol2] = tmp ;
@@ -170,7 +170,7 @@ bool plateau::randomRotateHillClimbing(bool force)
 
 	if(force == false )
 	{
-		if(nbErreur() > oldErreur )
+		if(nbErreur() >= oldErreur )
 		{
 			for (int i = 0; i < rotateNumber ; ++i)
 			{

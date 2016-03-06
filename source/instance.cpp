@@ -191,15 +191,13 @@ void instance::hillClimbing()
 		}
 		
 		//cout << iterationMax << endl ;
-		if (iterationMax == 10000000)
+		if (iterationMax == 500000)
 		{
 			cout << " tentative de forçage " << endl ;
 			iterationMax = 0;
 			for (int i = 0; i < 10; ++i)
 			{
 				action = rand() % 2 ;
-				cout << action << endl ;
-
 				if(action == 0)
 				{
 					p.randomSwapHillClimbing(true);
@@ -218,24 +216,32 @@ void instance::hillClimbing()
 
 }
 
-void instance::plateau2file(const char* NomFichier)
+void instance::plateau2file(double tempsExecution)
 {
-	/*ofstream fichier;
-	string FileNamePath = "../resultat/" ;
-	cout << endl << FileNamePath << endl ;*/
-	/*fichier.open("../resultat/") ;
+	ofstream fichier;
+	string FileNamePath = "../resultat/piece_" + to_string(iCol) + "x" + to_string(iRow) + "_.txt" ;
+	cout << " fichier : "  << FileNamePath << " crée " << endl  ;
+	fichier.open(FileNamePath) ;
 	if(!fichier) 
 	{   
-		cerr << " erreur d'ouverture du fichier resultat.clq" << endl ;
-	}*/
+		cerr << " erreur d'ouverture du fichier pour l'ecriture de la solution" << endl ;
+	}
 
-	/*for (int i = 0; i < iCol; ++i)
+	for (int i = 0; i < iRow; ++i)
 	{
-		for (int j = 0; j < iRow ; ++j)
+		for (int j = 0; j < iCol ; ++j)
 		{
 			fichier << p.puzzle[i][j].get_Id() << " " << p.puzzle[i][j].get_Rotation() << "\n" ;
 		}
 	}
+	fichier.close();
 
-	fichier.close();*/
+	fichier.open("../resultat/temps execution.txt" , std::ofstream::out | std::ofstream::app );
+	if(!fichier) 
+	{   
+		cerr << " erreur d'ouverture du fichier temps execution.txt" << endl ;
+	}
+
+	fichier << "temps execution : piece_" + to_string(iCol) + "x" + to_string(iRow) + "_.txt :" + to_string(tempsExecution) + "seconde\n" ;
+	fichier.close();
 }
