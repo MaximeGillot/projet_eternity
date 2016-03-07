@@ -145,6 +145,9 @@ void instance::hillClimbing()
 	int iterationMax = 0 ;
 	int action ;
 	int oldErreur ;
+	int bestSolution = p.nbErreur();
+	clock_t t1, t2;
+    t1 = clock();
 
 	
 
@@ -175,11 +178,13 @@ void instance::hillClimbing()
 
 	
 
-		if(p.nbErreur() < oldErreur)
+		if(p.nbErreur() < bestSolution )
 		{
 			cout << " meilleur solution trouver avec : " << p.nbErreur() << " erreurs " << endl << endl ;
-
+			t2 = clock();              
+			plateau2file((float)(t2-t1)/CLOCKS_PER_SEC , p.nbErreur() );
 			p.afficherPuzzle();
+			bestSolution = p.nbErreur();
 		}
 
 		if (p.nbErreur() == 0)
@@ -191,9 +196,9 @@ void instance::hillClimbing()
 		}
 		
 		//cout << iterationMax << endl ;
-		if (iterationMax == 500000)
+		if (iterationMax == 1000000)
 		{
-			cout << " tentative de forçage " << endl ;
+			//cout << " tentative de forçage " << endl ;
 			iterationMax = 0;
 			for (int i = 0; i < 10; ++i)
 			{
@@ -208,15 +213,15 @@ void instance::hillClimbing()
 				}
 			}
 			iterationMax = 0 ;
-			cout << " nb erreur : " << p.nbErreur() << " apres forcage : " << endl << endl ;
-			p.afficherPuzzle(); 
+			//cout << " nb erreur : " << p.nbErreur() << " apres forcage : " << endl << endl ;
+			//p.afficherPuzzle(); 
 		}
 
 	}
 
 }
 
-void instance::plateau2file(double tempsExecution)
+void instance::plateau2file(double tempsExecution , int erreur )
 {
 	ofstream fichier;
 	string FileNamePath = "../resultat/piece_" + to_string(iCol) + "x" + to_string(iRow) + "_.txt" ;
@@ -226,6 +231,8 @@ void instance::plateau2file(double tempsExecution)
 	{   
 		cerr << " erreur d'ouverture du fichier pour l'ecriture de la solution" << endl ;
 	}
+	fichier << erreur << " erreur " << "\n" ;
+	fichier << "temps execution : piece_" + to_string(iCol) + "x" + to_string(iRow) + "_.txt :" + to_string(tempsExecution) + "seconde\n" ;
 
 	for (int i = 0; i < iRow; ++i)
 	{
@@ -236,12 +243,12 @@ void instance::plateau2file(double tempsExecution)
 	}
 	fichier.close();
 
-	fichier.open("../resultat/temps execution.txt" , std::ofstream::out | std::ofstream::app );
+	/*fichier.open("../resultat/temps execution.txt" , std::ofstream::out | std::ofstream::app );
 	if(!fichier) 
 	{   
 		cerr << " erreur d'ouverture du fichier temps execution.txt" << endl ;
 	}
 
 	fichier << "temps execution : piece_" + to_string(iCol) + "x" + to_string(iRow) + "_.txt :" + to_string(tempsExecution) + "seconde\n" ;
-	fichier.close();
+	fichier.close();*/
 }

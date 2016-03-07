@@ -15,7 +15,7 @@ int main(int argc, char const *argv[])
 	in.hillClimbing() ;
 
     t2 = clock();              
-	in.plateau2file((float)(t2-t1)/CLOCKS_PER_SEC);
+	in.plateau2file((float)(t2-t1)/CLOCKS_PER_SEC , 0 );
 	return 0;
 }
 

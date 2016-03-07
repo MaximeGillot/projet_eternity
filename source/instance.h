@@ -16,7 +16,8 @@ public:
 	void afficherEnsemblePiece();
 	bool init(const char* path);
 	void hillClimbing() ;
-	void plateau2file(double tempsExecution) ;
+	void plateau2file(double tempsExecution , int erreur) ;
+	int bestSolution ;
 	
 private:
 
