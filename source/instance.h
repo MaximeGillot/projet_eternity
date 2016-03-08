@@ -16,14 +16,14 @@ public:
 	void afficherEnsemblePiece();
 	bool init(const char* path);
 	void hillClimbing() ;
-	void plateau2file(double tempsExecution , int erreur) ;
-	int bestSolution ;
+	void plateau2file(double tempsExecution , int  erreur) ;
 	
 private:
 
 	std::vector<piece> EnsemblePiece;
 	int iCol;
 	int iRow;
+	int bestSolution ;
 	plateau p;
 	
 };

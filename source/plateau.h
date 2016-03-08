@@ -23,4 +23,14 @@ public:
 	bool randomRotateHillClimbing(bool force) ;
 
 	bool randomSwapHillClimbing(bool force);
+
+	bool randomRotateHillClimbingStochastique (bool force , int oldErreur) ;
+
+	bool randomSwapHillClimbingStochastique (bool force, int oldErreur);
+
+	bool randomSwapAndRotateHillClimbingStochastique(bool force,  int oldErreur) ;
+
+	void perturbation(int nbPerturbation) ;
+
+
 };

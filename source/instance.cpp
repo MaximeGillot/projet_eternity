@@ -144,11 +144,12 @@ void instance::hillClimbing()
 	int j = 0;
 	int iterationMax = 0 ;
 	int action ;
-	int oldErreur ;
-	int bestSolution = p.nbErreur();
+	int currentErreur ;
 	clock_t t1, t2;
     t1 = clock();
-
+    bestSolution = p.nbErreur();
+    currentErreur = p.nbErreur() ;
+    int oldErreur = p.nbErreur();
 	
 
 	cout << " puzzle initial : " << endl ;
@@ -156,70 +157,69 @@ void instance::hillClimbing()
 
 	while(PasTrouver )
 	{
-		action = rand() % 2 ;
-		oldErreur = p.nbErreur();
-		
+		action = rand() % 3 ;
 		iterationMax++;
 
 		if(action == 0)
 		{
-			if(p.randomSwapHillClimbing(false))
+			if(p.randomSwapHillClimbingStochastique (false,currentErreur))
 			{
-				iterationMax = 0;
+				
+				currentErreur = p.nbErreur() ;
+			}
+		}
+		else if(action == 1)
+		{
+			if(p.randomRotateHillClimbingStochastique (false,currentErreur))
+			{
+				
+				currentErreur = p.nbErreur() ;
 			}
 		}
 		else
 		{
-			if(p.randomRotateHillClimbing(false))
+			if(p.randomSwapAndRotateHillClimbingStochastique(false,currentErreur))
 			{
+				
+				currentErreur = p.nbErreur() ;
+			}
+		}
+
+		if (currentErreur < )
+		{
+			/* code */
+		}
+	
+		if(currentErreur < bestSolution )
+		{
+			cout << " meilleur solution trouver avec : " << currentErreur << " erreurs " << endl << endl ;
+			t2 = clock();              
+			plateau2file((float)(t2-t1)/CLOCKS_PER_SEC , currentErreur );
+			p.afficherPuzzle();
+			bestSolution = currentErreur;
+			iterationMax = 0 ;
+
+			if (currentErreur == 0)
+			{
+				cout << "Solution Final trouvé " << endl ;
+				p.afficherPuzzle();
+				PasTrouver = false ;
 				iterationMax = 0 ;
 			}
-		}
-
-	
-
-		if(p.nbErreur() < bestSolution )
-		{
-			cout << " meilleur solution trouver avec : " << p.nbErreur() << " erreurs " << endl << endl ;
-			t2 = clock();              
-			plateau2file((float)(t2-t1)/CLOCKS_PER_SEC , p.nbErreur() );
-			p.afficherPuzzle();
-			bestSolution = p.nbErreur();
-		}
-
-		if (p.nbErreur() == 0)
-		{
-			cout << "Solution Final trouvé " << endl ;
-			p.afficherPuzzle();
-			PasTrouver = false ;
-			iterationMax = 0 ;
-		}
+		}	
 		
-		//cout << iterationMax << endl ;
-		if (iterationMax == 1000000)
+		if (iterationMax == 100000) // nombre d'itération a faire avant d'effectuer une perturbation
 		{
-			//cout << " tentative de forçage " << endl ;
-			iterationMax = 0;
-			for (int i = 0; i < 10; ++i)
-			{
-				action = rand() % 2 ;
-				if(action == 0)
-				{
-					p.randomSwapHillClimbing(true);
-				}
-				else
-				{
-					p.randomRotateHillClimbing(true);
-				}
-			}
+			p.perturbation(iCol+iRow);
 			iterationMax = 0 ;
-			//cout << " nb erreur : " << p.nbErreur() << " apres forcage : " << endl << endl ;
-			//p.afficherPuzzle(); 
+			currentErreur = p.nbErreur() ;
 		}
 
 	}
 
 }
+
+
 
 void instance::plateau2file(double tempsExecution , int erreur )
 {
@@ -252,3 +252,4 @@ void instance::plateau2file(double tempsExecution , int erreur )
 	fichier << "temps execution : piece_" + to_string(iCol) + "x" + to_string(iRow) + "_.txt :" + to_string(tempsExecution) + "seconde\n" ;
 	fichier.close();*/
 }
+
