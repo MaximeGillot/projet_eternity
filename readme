@@ -6,5 +6,20 @@ https://github.com/mamax49/projet_eternity
 
 méthode utilisé : hill climbing stochastique ie : si l’action est améliorante ou équivalente la garder
 
-si les swap de piece ne sont pas intelligent = aucune solution
+pseudo code de l'algorthime utilisé :
 
+	tant que le puzzle a des erreurs
+		faire une action 
+		si l'action est améliorant, c'est a dire que le nombre d'erreur a été reduit alors on la garde
+		sinon on revient en arriere 
+	fin tant que
+
+	à cela on ajoutera des perturbation quand le puzzle sera bloqué aprés un certain nombre d'opération
+
+
+les différente actions inplémenté : 
+	swap deux piéces :
+
+	rotate une piece :
+
+	swap puis rotate les 2 piéces 

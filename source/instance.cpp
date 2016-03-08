@@ -149,7 +149,7 @@ void instance::hillClimbing()
     t1 = clock();
     bestSolution = p.nbErreur();
     currentErreur = p.nbErreur() ;
-    int oldErreur = p.nbErreur();
+    int oldErreur ;
 	
 
 	cout << " puzzle initial : " << endl ;
@@ -159,7 +159,7 @@ void instance::hillClimbing()
 	{
 		action = rand() % 3 ;
 		iterationMax++;
-
+		oldErreur = p.nbErreur();
 		if(action == 0)
 		{
 			if(p.randomSwapHillClimbingStochastique (false,currentErreur))
@@ -185,9 +185,9 @@ void instance::hillClimbing()
 			}
 		}
 
-		if (currentErreur < )
+		if (currentErreur < oldErreur)
 		{
-			/* code */
+			iterationMax = 0;
 		}
 	
 		if(currentErreur < bestSolution )
@@ -197,7 +197,6 @@ void instance::hillClimbing()
 			plateau2file((float)(t2-t1)/CLOCKS_PER_SEC , currentErreur );
 			p.afficherPuzzle();
 			bestSolution = currentErreur;
-			iterationMax = 0 ;
 
 			if (currentErreur == 0)
 			{

@@ -449,6 +449,7 @@ void plateau::perturbation(int nbPerturbation)
 	int action ;
 	for (int i = 0; i < nbPerturbation ; ++i)
 	{
+		
 		action = rand() % 3 ;
 		if(action == 0)
 		{
