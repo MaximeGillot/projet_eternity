@@ -137,7 +137,7 @@ void plateau::initVide()
 /*
 si force = true alors l'action est executé et il n'y a pas de retour arriere
 */
-bool plateau::randomSwapHillClimbing(bool force) //revoir pour le rendre intéligent revoir le swap intéligent
+bool plateau::randomSwapHillClimbing(bool force , int oldErreur) //revoir pour le rendre intéligent revoir le swap intéligent
 {
 	int randomRow1 = rand() % iRow;
 	int randomCol1 = rand() % iCol;
@@ -195,7 +195,6 @@ bool plateau::randomSwapHillClimbing(bool force) //revoir pour le rendre intéli
 		randomRow2 = rand() % ((iRow-1)-1) + 1 ;
 		randomCol2 = rand() % ((iCol-1)-1) + 1 ;
 	}
-	int oldErreur = nbErreur();
 	piece tmp = puzzle[randomRow2][randomCol2] ;
 	puzzle[randomRow2][randomCol2] = puzzle[randomRow1][randomCol1] ;
 	puzzle[randomRow1][randomCol1] = tmp ;
@@ -213,13 +212,12 @@ bool plateau::randomSwapHillClimbing(bool force) //revoir pour le rendre intéli
 	return true ;
 }
 
-bool plateau::randomRotateHillClimbing(bool force)
+bool plateau::randomRotateHillClimbing(bool force, int oldErreur)
 {
 	//cout << " rotate aléatoire " << endl ;
 	int randomRow1 = rand() % iRow;
 	int randomCol1 = rand() % iCol;
 	int rotateNumber = rand() % 3 + 1 ;
-	int oldErreur = nbErreur();
 
 	//cout << "Rotation alléatoire de la case " << randomRow1 << "," << randomCol1 << " de force " << rotateNumber ;
 	for (int i = 0; i < rotateNumber ; ++i)
@@ -449,7 +447,7 @@ void plateau::perturbation(int nbPerturbation)
 	int action ;
 	for (int i = 0; i < nbPerturbation ; ++i)
 	{
-		
+
 		action = rand() % 3 ;
 		if(action == 0)
 		{

@@ -20,9 +20,9 @@ public:
 
 	void initVide();
 
-	bool randomRotateHillClimbing(bool force) ;
+	bool randomRotateHillClimbing(bool force, int oldErreur) ;
 
-	bool randomSwapHillClimbing(bool force);
+	bool randomSwapHillClimbing(bool force, int oldErreur );
 
 	bool randomRotateHillClimbingStochastique (bool force , int oldErreur) ;
 

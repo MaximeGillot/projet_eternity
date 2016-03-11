@@ -180,7 +180,6 @@ void instance::hillClimbing()
 		{
 			if(p.randomSwapAndRotateHillClimbingStochastique(false,currentErreur))
 			{
-				
 				currentErreur = p.nbErreur() ;
 			}
 		}
@@ -209,7 +208,7 @@ void instance::hillClimbing()
 		
 		if (iterationMax == 100000) // nombre d'itération a faire avant d'effectuer une perturbation
 		{
-			p.perturbation(iCol+iRow);
+			p.perturbation(5);
 			iterationMax = 0 ;
 			currentErreur = p.nbErreur() ;
 		}
@@ -241,14 +240,5 @@ void instance::plateau2file(double tempsExecution , int erreur )
 		}
 	}
 	fichier.close();
-
-	/*fichier.open("../resultat/temps execution.txt" , std::ofstream::out | std::ofstream::app );
-	if(!fichier) 
-	{   
-		cerr << " erreur d'ouverture du fichier temps execution.txt" << endl ;
-	}
-
-	fichier << "temps execution : piece_" + to_string(iCol) + "x" + to_string(iRow) + "_.txt :" + to_string(tempsExecution) + "seconde\n" ;
-	fichier.close();*/
 }
 
