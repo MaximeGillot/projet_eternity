@@ -1,0 +1,11 @@
+0 erreur 
+temps execution : piece_3x3_.txt :0.165952seconde
+0 1
+6 2
+1 2
+4 1
+8 1
+7 3
+2 0
+5 0
+3 3

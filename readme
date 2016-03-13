@@ -3,23 +3,9 @@
 Project of combinatory optimization to solve eternity II problem
 
 https://github.com/mamax49/projet_eternity
+(cliquer sur Download zip en haut a droite pour télécharger l’ensemble )
 
-méthode utilisé : hill climbing stochastique ie : si l’action est améliorante ou équivalente la garder
-
-pseudo code de l'algorthime utilisé :
-
-	tant que le puzzle a des erreurs
-		faire une action 
-		si l'action est améliorant, c'est a dire que le nombre d'erreur a été reduit alors on la garde
-		sinon on revient en arriere 
-	fin tant que
-
-	à cela on ajoutera des perturbation quand le puzzle sera bloqué aprés un certain nombre d'opération
-
-
-les différente actions inplémenté : 
-	swap deux piéces :
-
-	rotate une piece :
-
-	swap puis rotate les 2 piéces 
+compilation : se placer dans le répertoire /source puis lancer le script : script.sh via ./script.sh qui s'occupera de compiler, nettoyer le dossier /resultat et lancer le programme sur plusieurs instances .
+ou compiler manuellement et donner le nom de l'instance en paramètre du programme .
+rapport disponible : rapport.odt
+source contient l'ensemble des fichiers cpp , les résultats trouvé seront stocké dans le dossier /resultat .
